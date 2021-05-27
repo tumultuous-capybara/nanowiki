@@ -1,0 +1,57 @@
+purely functional interface for posts, defining variables in a clean namespace (with the schema), and then calling primitives to register them.
+split API, with define-symmetric-connection and define-connection for the schema, and simpler methods for
+main problem is the tiered constraints, which need to be multi-level for global, group, and individual overrides
+it's clearly a message-passing/object shape, but now to make the code interface in the page?
+
+returning false in a connection handler means there's no content for this connection, the returned string is added to the
+
+[ ] basic wiki functionality
+  [x] parsing out code
+  [x] code evaluation
+  [x] code namespacing and association with page
+  [ ] index.gmi special handling
+    [ ] allow for generation without a page context
+    [ ] add an index file if one isn't there
+  [x] gemini file generation
+  [ ] macros for schema definitions
+[ ] connection API
+  [ ] raw connections
+  [ ] argument context for pages
+[ ] advanced functionality
+  [ ] smart handling of empty line spacing when dealing with code
+  [ ] module handing for dynamically loaded schema files
+    [ ] shared namespace for function utilties
+  [ ] html output(?)
+  [ ] error handling for page-facing API
+  [ ] make everything actual structs
+[ ] clustering API (for listing references under the same heading, and ordering headings)
+  [ ] :before and :after for an (order) call,
+  [ ] ordering options for content as well, e.g. alphabetical?
+[ ] generation API (for supressing reference output and doing your own)
+[ ] inter-reference API (for using other connections between the two as data)
+[ ] schema API (for combining related reference types and providing another data point to work off of)
+[ ] inline pattern matching utility, for splitting up connection parameters in-document (for page-defined connections)
+  [ ] each includes the command name, tested against a per-object list for every connection
+[ ] cutoff for pages with lots of connections, or have have them all?
+[ ] fragment reference API
+[ ] some way to configure global site name
+[ ] !!! handling top-level forms in documents, 'define' doesn't work!
+[ ] resource-importing function to take a file and add it to the public output
+[ ] change public-handling behavior to clean files that don't belong, instead of deleting the folder
+[ ] ability to hide connections on a page level
+[ ] multiple pages to a file
+[ ] multi-pass loads with the syntax in order to evaluate
+[ ] matching macro for definitng handlers
+
+# Examples
+
+Guitar Music
+  Root "Guitar" page with links to a bunch of songs
+  song connection contains: title, artist, tuning, capo, key, and a short description of the track
+  actual pages have some personal notes on chord progression, how it's played, etc.
+
+Definitions
+  Symmetric connection on uses-term
+
+Summaries
+  Split into multiple parts with tags, so they can be used and reconstructed.
