@@ -2,9 +2,12 @@
 
 @title{Test Document}
 
-@(define (empty-a . forms) `(a ([href "#"]) ,@forms))
+@(define (empty-a . forms)
+  `(a ([href "#"]) ,@forms))
 
-@(define (backtick-code . forms) `(span ([style "font-family: monospace;font-weight: 700;font-size: .875em;"]) "`" ,@forms "`"))
+@(define (backtick-code . forms)
+  `(span ([style "font-family: monospace;font-weight: 700;font-size: .875em;"])
+    "`" ,@forms "`"))
 
 Aw yeah, paragraph time.
 

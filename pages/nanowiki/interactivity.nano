@@ -1,0 +1,5 @@
+#lang nanowiki
+
+@title{Interactivity and the Nanowiki Format}
+
+While inline links give good context for what's being written about, they don't show a broader overview of how the topic relates to the rest of the wiki's content. Good for definitions, less so for categories.

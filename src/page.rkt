@@ -2,7 +2,7 @@
 
 ; a very light connection system for pages, the bulk of the abstraction will fall on the document pages
 
-(require racket/hash xml json "html.rkt")
+(require racket/hash xml json "config.rkt")
 
 (provide load-page current-page write-all-pages page-index set-page-contents! page set-page-title! page-contents build-json-index page-options get-page get-connection page-connections set-page-connections!)
 
@@ -10,7 +10,7 @@
   (path [title #:mutable] [connections #:mutable] [contents #:mutable] [options #:mutable]))
 
 (struct connection
-  ([target] [data #:mutable] [hidden-status]))
+  ([target] [static-data] [dynamic-data #:mutable] [title #:mutable] [is-hidden #:mutable] [link-fragment #:mutable]))
 
 (define current-page #f)
 (define page-index '())
@@ -85,7 +85,9 @@
   (filter-void (map handle-page page-index)))
 
 (define (write-page p)
-  (let ([x (build-page-xexpr (page-contents p) (or (page-title p) "$:/fragment"))])
+  (define (call-template path forms title)
+    ((dynamic-require path 'build-page) forms title))
+  (let ([x (call-template default-template (page-contents p) (or (page-title p) "$:/fragment"))])
     (display-to-file (xexpr->string x)
       (format "./public/~a.html" (strip-path (page-path p)))
       #:exists 'replace)))

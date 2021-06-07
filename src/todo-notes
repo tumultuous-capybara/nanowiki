@@ -1,57 +1,127 @@
-purely functional interface for posts, defining variables in a clean namespace (with the schema), and then calling primitives to register them.
-split API, with define-symmetric-connection and define-connection for the schema, and simpler methods for
-main problem is the tiered constraints, which need to be multi-level for global, group, and individual overrides
-it's clearly a message-passing/object shape, but now to make the code interface in the page?
+[ ] html elements, wiki handlers, default styles
+  [ ] add things from scribble/markdown/mediawiki to this list
+  [x] bold, italic
+  [x] section -> h2
+  [ ] img
+  [ ] inline-code
+  [ ] code block
+  [ ] blockquote
+  [ ] simple lists (bulleted, numbered)
+  [ ] wiki/list (sorting, data items, tab indentation)
+  [ ] horizontal rule
+  [ ] link
+  [ ] anchor (external links)
+  [ ] section needs to be updated to store data, which can be used to make a table of contents
 
-returning false in a connection handler means there's no content for this connection, the returned string is added to the
+[ ] user-facing html-generation/parsing/function API
+  [ ] better ways of connecting together html-generation functions
+  [ ] general-purpose semantic elements which can be handled for adding more content into custom functions
+  [ ] css-generation and output to the main css file
 
-[ ] basic wiki functionality
-  [x] parsing out code
-  [x] code evaluation
-  [x] code namespacing and association with page
-  [ ] index.gmi special handling
-    [ ] allow for generation without a page context
-    [ ] add an index file if one isn't there
-  [x] gemini file generation
-  [ ] macros for schema definitions
-[ ] connection API
-  [ ] raw connections
-  [ ] argument context for pages
-[ ] advanced functionality
-  [ ] smart handling of empty line spacing when dealing with code
-  [ ] module handing for dynamically loaded schema files
-    [ ] shared namespace for function utilties
-  [ ] html output(?)
-  [ ] error handling for page-facing API
-  [ ] make everything actual structs
-[ ] clustering API (for listing references under the same heading, and ordering headings)
-  [ ] :before and :after for an (order) call,
-  [ ] ordering options for content as well, e.g. alphabetical?
-[ ] generation API (for supressing reference output and doing your own)
-[ ] inter-reference API (for using other connections between the two as data)
-[ ] schema API (for combining related reference types and providing another data point to work off of)
-[ ] inline pattern matching utility, for splitting up connection parameters in-document (for page-defined connections)
-  [ ] each includes the command name, tested against a per-object list for every connection
-[ ] cutoff for pages with lots of connections, or have have them all?
-[ ] fragment reference API
+[ ] page->page module access
+  [ ] research using actual require in pages in order to have macros work
+  [ ] figure out a way to make seperate sites using dynamic-require, and still have nanowiki/modules resolve correctly
+
+[ ] inter-build data caching/storage (this is primarily for fetching web data)
+
+[ ] more careful handling with a file-resource system similar to webpack
+
+[ ] default page function in config and optional page template setting
+
+[ ] a high-level abstraction for pulling out portions of in-paragraph text and wrapping them in functions
+  note: adding tags, functions, and other code inline texts breaks up the writing and reading flow,
+        making it hard to skip over and read the literal text
+        -- in a more interactive application, non-structural (bold, italic, etc.) in-text data should be disconnected from the content,
+        and then able to be retargeted to text if the algorithm can't find out where to connect them
+
+[ ] Connection API
+  [ ] low-level connection-data adding functions
+  [ ] high-level macro for adding functions that lexically allows for pulling static connection data
+  [ ] post-connection data transform hooks
+  [ ] functionality to hide connections per-page
+  [ ] mutable link title
+  [ ] optional link fragment
+  [ ] optional heading system, with a global option to enforce it
+  [ ] title aliases for pages
+  [ ] with-page macro that reverses application order in order to provide a more natural syntax (?)
+    [ ] if that's too much, 'with-page-syntax' allowing src.foo and target.baz might be more accessible
+        but probably not worth the effort
+  [ ] way to acquire page as a closure that can be called directly, instead of needing an extra function
+  [ ] placement API
+    [ ] function to establish a connection and put it at the same place as the form in the document
+  [ ] clustering API (for listing references under the same heading, and ordering headings)
+    [ ] :before and :after for an (order) call,
+    [ ] ordering options for content as well, e.g. alphabetical?
+  [ ] inline pattern matching utility, for splitting up connection parameters in-document (for page-defined connections)
+    [ ] each includes the command name, tested against a per-object list for every connection
+
+[ ] Page Syntax API
+  [ ] multiple pages to a file
+  [ ] dynamic page creation
+
+[ ] Reader Syntax
+  [ ] `@foo:` and `@foo[]:` for indentation-based blocks
+    note: editor removes whitespace, has to detect actual characters below indentation level
+          if the following content isn't indented, it goes until there's a whitespace line, for annotations
+          if there's more non-whitespace text on the same line as it, it's line-based form!
+            (this doesn't stop annotations from having arguments, because of the `bracket[]` syntax)
+          having this also means raw markdown-like syntax is much less necessary, and maybe even a bad idea
+            (given building familiarity with the synax is necessary)
+    [ ] parameterized tab/spacing settings
+
+[ ] Raw Document Syntax
+  note: various syntax transformations that can be applied at the string level to quickly type and distingiush common use cases
+        the block API will need to be reworked to take different parsing modes, for blocks that want different kinds of content
+        markdown-like syntax is very well known, though research should be done on e.g. mediawiki features
+  [ ] `#` for titles
+  [ ] `##` for sections
+  [ ] `---` for horizontal rules
+  [ ] `*text*` for italic
+  [ ] `**text**` for bold
+  [ ] backticks for raw inline code (?)
+  [ ] lists (bulleted, ordered, and nested)
+
+[ ] Document Handling
+  [ ] if a form has a list of results, and some are void, they should be removed, and if one is left, it should be treated as a single element
+  [ ] formatting data as a string if it ends up in the document structure
+
 [ ] some way to configure global site name
-[ ] !!! handling top-level forms in documents, 'define' doesn't work!
-[ ] resource-importing function to take a file and add it to the public output
+[ ] resource-importing utility function to take a file and add it to the public output
 [ ] change public-handling behavior to clean files that don't belong, instead of deleting the folder
-[ ] ability to hide connections on a page level
-[ ] multiple pages to a file
-[ ] multi-pass loads with the syntax in order to evaluate
-[ ] matching macro for definitng handlers
+[ ] being able to use fragments to link to specific connections like footnotes could replace the functionality of hover,
+    specifically, for definitions, which opens the door for more advanced uses
 
-# Examples
+[ ] Modules, for when the core works
+  [ ] tags, more generalized tools for building summaries
+  [ ] racket documentation linking
+  [ ] nanowiki syntax highlighting
+  [ ] pygments syntax highlighting
+  [ ] part-of-speech templates for connections
+  [ ] a blog, just because
+
+# Examples for Documentation
 
 Guitar Music
   Root "Guitar" page with links to a bunch of songs
   song connection contains: title, artist, tuning, capo, key, and a short description of the track
   actual pages have some personal notes on chord progression, how it's played, etc.
+  chord-progression html/svg generation
 
 Definitions
   Symmetric connection on uses-term
 
 Summaries
-  Split into multiple parts with tags, so they can be used and reconstructed.
+  Split into multiple parts with tags (from the source document?), so they can be used and reconstructed.
+
+Automatic Linking to Documentation
+  Racket, though haskell might work, too.
+
+Complex Multi-Indicies
+  FS-like video game powers setup, each with several facets and further information
+    'powers with the burning effect' 'powers that heal' 'AoE Powers'
+
+
+Types of Connections
+  Prerequisite Knowledge
+  Expands Further
+  Definition
